@@ -1,0 +1,43 @@
+syntax = "proto3";
+package liubaninc.m1.peer;
+
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+// this line is used by starport scaffolding # 1
+import "peer/peer.proto";
+
+option go_package = "github.com/liubaninc/m1/x/peer/types";
+
+// Query defines the gRPC querier service.
+service Query {
+    // this line is used by starport scaffolding # 2
+
+	// Queries a peer by index.
+	rpc Peer(QueryGetPeerRequest) returns (QueryGetPeerResponse) {
+		option (google.api.http).get = "/liubaninc/m1/peer/peer/{index}";
+	}
+
+	// Queries a list of peer items.
+	rpc PeerAll(QueryAllPeerRequest) returns (QueryAllPeerResponse) {
+		option (google.api.http).get = "/liubaninc/m1/peer/peer";
+	}
+
+}
+
+// this line is used by starport scaffolding # 3
+message QueryGetPeerRequest {
+	string index = 1;
+}
+
+message QueryGetPeerResponse {
+	Peer Peer = 1;
+}
+
+message QueryAllPeerRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllPeerResponse {
+	repeated Peer Peer = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}

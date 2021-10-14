@@ -1,0 +1,52 @@
+syntax = "proto3";
+package liubaninc.m1.utxo;
+
+// this line is used by starport scaffolding # proto/tx/import
+import "utxo/base.proto";
+import "cosmos/bank/v1beta1/bank.proto";
+
+option go_package = "github.com/liubaninc/m1/x/utxo/types";
+
+// Msg defines the Msg service.
+service Msg {
+    // this line is used by starport scaffolding # proto/tx/rpc
+  rpc Asset(MsgAsset) returns (MsgAssetResponse);
+  rpc Issue(MsgIssue) returns (MsgIssueResponse);
+  rpc Burn(MsgBurn) returns (MsgBurnResponse);
+  rpc Transfer(MsgTransfer) returns (MsgTransferResponse);
+}
+
+// this line is used by starport scaffolding # proto/tx/message
+message MsgAsset {
+  string creator = 1;
+  Base base = 2;
+  cosmos.bank.v1beta1.Metadata metadata = 3;
+}
+
+message MsgAssetResponse {
+}
+
+message MsgIssue {
+  string creator = 1;
+  Base base = 2;
+}
+
+message MsgIssueResponse {
+}
+
+
+message MsgBurn {
+  string creator = 1;
+  Base base = 2;
+}
+
+message MsgBurnResponse {
+}
+
+message MsgTransfer {
+  string creator = 1;
+  Base base = 2;
+}
+
+message MsgTransferResponse {
+}

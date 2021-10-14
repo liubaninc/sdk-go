@@ -1,0 +1,79 @@
+syntax = "proto3";
+package liubaninc.m1.utxo;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+// this line is used by starport scaffolding # 1
+import "cosmos/base/v1beta1/coin.proto";
+import "utxo/token.proto";
+import "utxo/input.proto";
+
+option go_package = "github.com/liubaninc/m1/x/utxo/types";
+
+// Query defines the gRPC querier service.
+service Query {
+    // this line is used by starport scaffolding # 2
+
+	// Queries a token by index.
+	rpc Token(QueryGetTokenRequest) returns (QueryGetTokenResponse) {
+		option (google.api.http).get = "/liubaninc/m1/utxo/token/{base}";
+	}
+
+	// Queries a list of token items.
+	rpc TokenAll(QueryAllTokenRequest) returns (QueryAllTokenResponse) {
+		option (google.api.http).get = "/liubaninc/m1/utxo/token";
+	}
+
+	// Queries a input by index.
+	rpc Input(QueryGetInputRequest) returns (QueryGetInputResponse) {
+		option (google.api.http).get = "/liubaninc/m1/utxo/input/{address}/{base}/{amount}";
+	}
+
+	// Queries a list of input items.
+	rpc InputAll(QueryAllInputRequest) returns (QueryAllInputResponse) {
+		option (google.api.http).get = "/liubaninc/m1/utxo/input/{address}/{base}";
+	}
+
+}
+
+// this line is used by starport scaffolding # 3
+message QueryGetTokenRequest {
+	string base = 1;
+}
+
+message QueryGetTokenResponse {
+	TokenDetail Token = 1;
+}
+
+message QueryAllTokenRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllTokenResponse {
+	repeated TokenDetail Token = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+message QueryGetInputRequest {
+	string address = 1;
+	string base = 2;
+	string amount = 3;
+	int64 lock = 4;
+}
+
+message QueryGetInputResponse {
+	repeated Input Input = 1;
+	repeated cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+}
+
+message QueryAllInputRequest {
+	string address = 1;
+	string base = 2;
+	cosmos.base.query.v1beta1.PageRequest pagination = 3;
+}
+
+message QueryAllInputResponse {
+	repeated Input Input = 1;
+	repeated cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+	cosmos.base.query.v1beta1.PageResponse pagination = 3;
+}

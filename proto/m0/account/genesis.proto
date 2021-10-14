@@ -1,0 +1,14 @@
+syntax = "proto3";
+package liubaninc.m1.account;
+
+// this line is used by starport scaffolding # genesis/proto/import
+import "account/account.proto";
+
+option go_package = "github.com/liubaninc/m1/x/account/types";
+
+// GenesisState defines the account module's genesis state.
+message GenesisState {
+    // this line is used by starport scaffolding # genesis/proto/state
+		repeated Account accountList = 1; // this line is used by starport scaffolding # genesis/proto/stateField
+    // this line is used by starport scaffolding # ibc/genesis/proto
+}

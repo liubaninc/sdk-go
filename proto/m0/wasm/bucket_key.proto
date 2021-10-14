@@ -1,0 +1,11 @@
+syntax = "proto3";
+package liubaninc.m1.wasm;
+
+option go_package = "github.com/liubaninc/m1/x/wasm/types";
+
+import "gogoproto/gogo.proto";
+
+message BucketKey {
+  string index = 2;
+  string version = 3; 
+}

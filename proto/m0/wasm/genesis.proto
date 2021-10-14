@@ -1,0 +1,20 @@
+syntax = "proto3";
+package liubaninc.m1.wasm;
+
+// this line is used by starport scaffolding # genesis/proto/import
+import "wasm/contract_code.proto";
+import "wasm/bucket_key.proto";
+import "xmodel/xmodel.proto";
+import "wasm/contract.proto";
+
+option go_package = "github.com/liubaninc/m1/x/wasm/types";
+
+// GenesisState defines the wasm module's genesis state.
+message GenesisState {
+    // this line is used by starport scaffolding # genesis/proto/state
+		repeated ContractCode contractCodeList = 4; // this line is used by starport scaffolding # genesis/proto/stateField
+		repeated BucketKey bucketKeyList = 3; // this line is used by starport scaffolding # genesis/proto/stateField
+		repeated xmodel.InputExt inputExtList = 2; // this line is used by starport scaffolding # genesis/proto/stateField
+		repeated Contract contractList = 1; // this line is used by starport scaffolding # genesis/proto/stateField
+    // this line is used by starport scaffolding # ibc/genesis/proto
+}

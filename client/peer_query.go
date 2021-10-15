@@ -3,7 +3,7 @@ package client
 import (
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/golang/protobuf/proto"
-	peertypes "github.com/liubaninc/m1/x/peer/types"
+	peertypes "github.com/liubaninc/sdk-go/modules/peer/types"
 )
 
 func (c Client) GetPeer(index string) (*peertypes.QueryGetPeerResponse, error) {

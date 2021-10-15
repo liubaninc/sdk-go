@@ -3,24 +3,19 @@ package client
 import (
 	"context"
 	"fmt"
+
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/golang/protobuf/proto"
-	"github.com/liubaninc/m1/app"
-	sdktypes "github.com/liubaninc/m1/sdk"
-	"github.com/tendermint/spm/cosmoscmd"
+	"github.com/liubaninc/sdk-go/params"
 	rpcclient "github.com/tendermint/tendermint/rpc/client"
 	rpchttp "github.com/tendermint/tendermint/rpc/client/http"
 )
 
 var (
-	encodingConfig = cosmoscmd.MakeEncodingConfig(app.ModuleBasics)
+	encodingConfig = params.MakeEncodingConfig()
 )
-
-func init() {
-	cosmoscmd.SetPrefixes(app.AccountAddressPrefix)
-}
 
 type Client struct {
 	conn rpcclient.Client
@@ -79,13 +74,13 @@ func (c Client) GenerateAndBroadcastTx(fromKey cryptotypes.PrivKey, builder TxBu
 	if err != nil {
 		return nil, err
 	}
-	var unsignedTxResp sdktypes.BuildUnsignedTxResponse
+	var unsignedTxResp BuildUnsignedTxResponse
 	if err := proto.Unmarshal(value, &unsignedTxResp); err != nil {
 		return nil, err
 	}
 
 	// 获取签名内容
-	signBytesReq := sdktypes.GetSignBytesRequest{
+	signBytesReq := GetSignBytesRequest{
 		Tx:     unsignedTxResp.Tx,
 		PubKey: pubKey,
 	}
@@ -94,7 +89,7 @@ func (c Client) GenerateAndBroadcastTx(fromKey cryptotypes.PrivKey, builder TxBu
 	if err != nil {
 		return nil, err
 	}
-	var signBytesResp sdktypes.GetSignBytesResponse
+	var signBytesResp GetSignBytesResponse
 	if err := proto.Unmarshal(value, &signBytesResp); err != nil {
 		return nil, err
 	}
@@ -106,7 +101,7 @@ func (c Client) GenerateAndBroadcastTx(fromKey cryptotypes.PrivKey, builder TxBu
 		return nil, err
 	}
 	// 广播交易
-	buildTxReq := sdktypes.BuildTxRequest{
+	buildTxReq := BuildTxRequest{
 		Tx:       unsignedTxResp.Tx,
 		PubKey:   pubKey,
 		Sequence: signBytesResp.Sequence,
@@ -117,7 +112,7 @@ func (c Client) GenerateAndBroadcastTx(fromKey cryptotypes.PrivKey, builder TxBu
 	if err != nil {
 		return nil, err
 	}
-	var buildTxResp sdktypes.BuildTxResponse
+	var buildTxResp BuildTxResponse
 	if err := proto.Unmarshal(value, &buildTxResp); err != nil {
 		return nil, err
 	}

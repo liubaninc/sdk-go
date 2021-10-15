@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/cosmos/cosmos-sdk/crypto"
 	"github.com/cosmos/cosmos-sdk/crypto/hd"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
@@ -32,14 +33,16 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	privateKey, err = kr.ExportPrivateKeyObject("test")
+	privateKeyArmor, err := kr.ExportPrivKeyArmor("test", "111")
 	if err != nil {
 		panic(err)
 	}
-	privateKey1, err = kr.ExportPrivateKeyObject("wang")
+	privateKey, _, err = crypto.UnarmorDecryptPrivKey(privateKeyArmor, "111")
+	privateKeyArmor1, err := kr.ExportPrivKeyArmor("wang", "111")
 	if err != nil {
 		panic(err)
 	}
+	privateKey1, _, err = crypto.UnarmorDecryptPrivKey(privateKeyArmor1, "111")
 }
 
 func TestSetRole(t *testing.T) {

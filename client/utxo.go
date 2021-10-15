@@ -2,11 +2,10 @@ package client
 
 import (
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-	sdktypes "github.com/liubaninc/m1/sdk"
 )
 
 type TxAssetBuilder struct {
-	sdktypes.AssetRequest
+	AssetRequest
 }
 
 func (t *TxAssetBuilder) SetCreator(creator string) {
@@ -60,7 +59,7 @@ func (t *TxAssetBuilder) Bytes() []byte {
 }
 
 type TxIssueBuilder struct {
-	sdktypes.IssueRequest
+	IssueRequest
 }
 
 func (t *TxIssueBuilder) SetCreator(creator string) {
@@ -84,7 +83,7 @@ func (t *TxIssueBuilder) SetTimeoutHeight(timeoutHeight uint64) {
 }
 
 func (t *TxIssueBuilder) AppendReceiver(address string, amounts string) {
-	t.Receivers = append(t.Receivers, &sdktypes.Receiver{Address: address, Amounts: amounts})
+	t.Receivers = append(t.Receivers, &Receiver{Address: address, Amounts: amounts})
 }
 
 func (t *TxIssueBuilder) Path() string {
@@ -100,7 +99,7 @@ func (t *TxIssueBuilder) Bytes() []byte {
 }
 
 type TxTransferBuilder struct {
-	sdktypes.TransferRequest
+	TransferRequest
 }
 
 func (t *TxTransferBuilder) SetCreator(creator string) {
@@ -124,7 +123,7 @@ func (t *TxTransferBuilder) SetTimeoutHeight(timeoutHeight uint64) {
 }
 
 func (t *TxTransferBuilder) AppendReceiver(address string, amounts string) {
-	t.Receivers = append(t.Receivers, &sdktypes.Receiver{Address: address, Amounts: amounts})
+	t.Receivers = append(t.Receivers, &Receiver{Address: address, Amounts: amounts})
 }
 
 func (t *TxTransferBuilder) Path() string {
@@ -140,7 +139,7 @@ func (t *TxTransferBuilder) Bytes() []byte {
 }
 
 type TxBurnBuilder struct {
-	sdktypes.BurnRequest
+	BurnRequest
 }
 
 func (t *TxBurnBuilder) SetCreator(creator string) {

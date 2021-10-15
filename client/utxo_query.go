@@ -3,7 +3,7 @@ package client
 import (
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/golang/protobuf/proto"
-	utxotypes "github.com/liubaninc/m1/x/utxo/types"
+	utxotypes "github.com/liubaninc/sdk-go/modules/utxo/types"
 )
 
 func (c Client) GetToken(base string) (*utxotypes.QueryGetTokenResponse, error) {

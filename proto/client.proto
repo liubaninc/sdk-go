@@ -1,0 +1,162 @@
+syntax = "proto3";
+package m1.sdk.v1beta1;
+
+import "gogoproto/gogo.proto";
+import "cosmos/tx/v1beta1/tx.proto";
+import "cosmos/bank/v1beta1/bank.proto";
+
+option go_package = "github.com/liubaninc/sdk-go/client";
+
+message GenKeyRequest {
+
+}
+
+message GenKeyResponse {
+
+}
+
+message SignTxRequest {
+  cosmos.tx.v1beta1.Tx tx = 1;
+  string mnemonic = 2;
+  string broadcast = 3;
+}
+
+message SignTxResponse {
+  repeated bytes signBytes = 1;
+}
+
+message GetSignBytesRequest {
+  cosmos.tx.v1beta1.Tx tx = 1;
+  string pubKey = 2;
+}
+
+message GetSignBytesResponse {
+  bytes signBytes = 2;
+  uint64 sequence = 3;
+}
+
+message BuildTxRequest {
+  cosmos.tx.v1beta1.Tx tx = 1;
+  string pubKey = 2;
+  uint64 sequence = 3;
+  repeated bytes sigBytes = 4;
+}
+
+message BuildTxResponse {
+  // cosmos.tx.v1beta1.Tx tx = 1;
+  bytes raw = 2;
+}
+
+message BuildUnsignedTxResponse {
+  cosmos.tx.v1beta1.Tx tx = 1;
+}
+
+message BuildUnsignedTxBase {
+  string creator = 1;
+  string fees = 2;
+  uint64 lock = 5;
+  string memo = 6;
+  uint64 timeout_height = 7;
+}
+
+message SetRoleRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string address = 2;
+  repeated string roles = 3;
+}
+
+message AssetRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+
+  cosmos.bank.v1beta1.Metadata asset = 2;
+}
+
+message Receiver {
+  string address = 1;
+  string amounts = 2;
+}
+
+message IssueRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  repeated Receiver receivers = 2;
+}
+
+message TransferRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  repeated Receiver receivers = 2;
+}
+
+message BurnRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string amounts = 2;
+}
+
+message SubmitRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  bytes code = 2;
+  string runtime = 3;
+  string module = 4;
+  string name = 5;
+  string src = 6;
+  string abi = 7;
+  repeated string approvers = 8;
+}
+
+message ApproveRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string code_hash = 2;
+}
+
+message DeployRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string name = 2;
+  string code_hash = 3;
+  string init_args = 4;
+}
+
+message UpgradeRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string name = 2;
+  string code_hash = 3;
+}
+
+message InvokeRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string name = 2;
+  string method = 3;
+  string args = 4;
+  string amounts = 5;
+}
+
+message FreezeRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string name = 2;
+}
+
+message UnFreezeRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string name = 2;
+}
+
+message DestroyRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string name = 2;
+}
+
+message CreatePeerRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string index = 2;
+  string addr = 3;
+  string moniker = 4;
+}
+
+message UpdatePeerRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string index = 2;
+  string addr = 3;
+}
+
+message DeletePeerRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string index = 2;
+}

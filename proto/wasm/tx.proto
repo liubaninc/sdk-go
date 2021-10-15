@@ -1,0 +1,115 @@
+syntax = "proto3";
+package liubaninc.m1.wasm;
+
+// this line is used by starport scaffolding # proto/tx/import
+import "utxo/base.proto";
+import "wasm/base_ext.proto";
+import "xmodel/xmodel.proto";
+
+option go_package = "github.com/liubaninc/sdk-go/modules/wasm/types";
+
+// Msg defines the Msg service.
+service Msg {
+    // this line is used by starport scaffolding # proto/tx/rpc
+  rpc Destroy(MsgDestroy) returns (MsgDestroyResponse);
+  rpc Unfreeze(MsgUnfreeze) returns (MsgUnfreezeResponse);
+  rpc Freeze(MsgFreeze) returns (MsgFreezeResponse);
+  rpc Upgrade(MsgUpgrade) returns (MsgUpgradeResponse);
+  rpc Invoke(MsgInvoke) returns (MsgInvokeResponse);
+  rpc Deploy(MsgDeploy) returns (MsgDeployResponse);
+  rpc Approve(MsgApprove) returns (MsgApproveResponse);
+  rpc Submit(MsgSubmit) returns (MsgSubmitResponse);
+
+}
+
+// this line is used by starport scaffolding # proto/tx/message
+message MsgDestroy {
+  string creator = 1;
+  utxo.Base base = 2;
+  string name = 3;
+}
+
+message MsgDestroyResponse {
+}
+
+message MsgUnfreeze {
+  string creator = 1;
+  utxo.Base base = 2;
+  string name = 3;
+}
+
+message MsgUnfreezeResponse {
+}
+
+message MsgFreeze {
+  string creator = 1;
+  utxo.Base base = 2;
+  string name = 3;
+}
+
+message MsgFreezeResponse {
+}
+
+
+message MsgUpgrade {
+  string creator = 1;
+  utxo.Base base = 2;
+  BaseExt baseExt = 3;
+
+  string name = 4;
+  string codeHash = 5;
+  repeated xmodel.ResourceLimit resource_limits = 6;
+}
+
+message MsgUpgradeResponse {
+}
+
+message MsgInvoke {
+  string creator = 1;
+  utxo.Base base = 2;
+  BaseExt baseExt = 3;
+  repeated InvokeRequest requests = 4;
+}
+
+message MsgInvokeResponse {
+}
+
+
+message MsgDeploy {
+  string creator = 1;
+  utxo.Base base = 2;
+  BaseExt baseExt = 3;
+
+  string name = 4;
+  string codeHash = 5;
+  string initArgs = 6;
+  repeated xmodel.ResourceLimit resource_limits = 7;
+}
+
+message MsgDeployResponse {
+}
+
+message MsgApprove {
+  string creator = 1;
+  utxo.Base base = 2;
+  string codeHash = 3;
+}
+
+message MsgApproveResponse {
+}
+
+message MsgSubmit {
+  string creator = 1;
+  utxo.Base base = 2;
+  string name = 3;
+  bytes code = 4;
+  string src = 5;
+  string abi = 6;
+  xmodel.WasmCodeDesc desc = 7;
+
+  repeated string approvers = 16;
+}
+
+message MsgSubmitResponse {
+  string codeHash = 1;
+}

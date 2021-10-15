@@ -1,0 +1,209 @@
+syntax = "proto3";
+package syncer;
+
+import "google/api/annotations.proto";
+import "pagination.proto";
+
+// Service defines a gRPC service for interacting with transactions.
+service Query {
+  rpc BlockChain(QueryBlockChainRequest) returns (QueryBlockChainResponse) {
+    option (google.api.http).get = "/blockchain";
+  }
+
+  rpc Blocks(QueryBlocksRequest) returns (QueryBlocksResponse) {
+    option (google.api.http).get = "/blocks";
+  }
+  rpc Block(QueryBlockRequest) returns (QueryBlockResponse) {
+    option (google.api.http).get = "/blocks/{hash}";
+  }
+
+  rpc Transactions(QueryTransactionsRequest) returns (QueryTransactionsResponse) {
+    option (google.api.http).get = "/transactions";
+  }
+
+  rpc Transaction(QueryTransactionRequest) returns (QueryTransactionResponse) {
+    option (google.api.http).get = "/transactions/{hash}";
+  }
+
+  rpc Addresses(QueryAddressesRequest) returns (QueryAddressesResponse) {
+    option (google.api.http).get = "/addresses";
+  }
+  rpc Address(QueryAddressRequest) returns (QueryAddressResponse) {
+    option (google.api.http).get = "/addresses/{address}";
+  }
+
+  rpc Assets(QueryAssetsRequest) returns (QueryAssetsResponse) {
+    option (google.api.http).get = "/assets";
+  }
+  rpc Asset(QueryAssetRequest) returns (QueryAssetResponse) {
+    option (google.api.http).get = "/assets/{name}";
+  }
+
+  rpc ContractCodes(QueryContractCodesRequest) returns (QueryContractCodesResponse) {
+    option (google.api.http).get = "/contractcodes";
+  }
+  rpc ContractCode(QueryContractCodeRequest) returns (QueryContractCodeResponse) {
+    option (google.api.http).get = "/contractcodes/{hash}";
+  }
+
+  rpc Contracts(QueryContractsRequest) returns (QueryContractsResponse) {
+    option (google.api.http).get = "/contracts";
+  }
+  rpc Contract(QueryContractRequest) returns (QueryContractResponse) {
+    option (google.api.http).get = "/contracts/{name}";
+  }
+
+  rpc Peers(QueryPeersRequest) returns (QueryPeersResponse) {
+    option (google.api.http).get = "/peers";
+  }
+  rpc Peer(QueryPeerRequest) returns (QueryPeerResponse) {
+    option (google.api.http).get = "/peers/{name}";
+  }
+
+  rpc Validators(QueryValidatorsRequest) returns (QueryValidatorsResponse) {
+    option (google.api.http).get = "/validators";
+  }
+  rpc Validator(QueryValidatorRequest) returns (QueryValidatorResponse) {
+    option (google.api.http).get = "/validators/{name}";
+  }
+}
+
+message QueryBlockChainRequest {
+}
+
+message QueryBlockChainResponse {
+}
+
+message QueryBlocksRequest {
+  PageRequest pagination = 1;
+}
+
+message QueryBlocksResponse {
+  PageResponse pagination = 1;
+}
+
+message QueryBlockRequest {
+  string hash = 1;
+}
+
+message QueryBlockResponse {
+
+}
+
+message QueryTransactionsRequest {
+  PageRequest pagination = 1;
+  string  address = 2;
+  string  asset = 3;
+  string  contract = 4;
+  string  code = 5;
+}
+
+message QueryTransactionsResponse {
+  PageResponse pagination = 1;
+}
+
+message QueryTransactionRequest {
+  string hash = 1;
+  string address = 2;
+  string asset = 3;
+}
+
+message QueryTransactionResponse {
+
+}
+
+message QueryAddressesRequest {
+  PageRequest pagination = 1;
+}
+
+message QueryAddressesResponse {
+  PageResponse pagination = 1;
+}
+
+message QueryAddressRequest {
+  string address = 1;
+}
+
+message QueryAddressResponse {
+
+}
+
+message QueryAssetsRequest {
+  PageRequest pagination = 1;
+}
+
+message QueryAssetsResponse {
+  PageResponse pagination = 1;
+}
+
+message QueryAssetRequest {
+  string name = 1;
+}
+
+message QueryAssetResponse {
+
+}
+
+message QueryContractCodesRequest {
+  PageRequest pagination = 1;
+}
+
+message QueryContractCodesResponse {
+  PageResponse pagination = 1;
+}
+
+message QueryContractCodeRequest {
+  string hash = 1;
+}
+
+message QueryContractCodeResponse {
+
+}
+
+message QueryContractsRequest {
+  PageRequest pagination = 1;
+}
+
+message QueryContractsResponse {
+  PageResponse pagination = 1;
+}
+
+message QueryContractRequest {
+  string name = 1;
+}
+
+message QueryContractResponse {
+
+}
+
+message QueryPeersRequest {
+  PageRequest pagination = 1;
+}
+
+message QueryPeersResponse {
+  PageResponse pagination = 1;
+}
+
+message QueryPeerRequest {
+  string name = 1;
+}
+
+message QueryPeerResponse {
+
+}
+
+message QueryValidatorsRequest {
+  PageRequest pagination = 1;
+}
+
+message QueryValidatorsResponse {
+  PageResponse pagination = 1;
+}
+
+message QueryValidatorRequest {
+  string name = 1;
+}
+
+message QueryValidatorResponse {
+
+}

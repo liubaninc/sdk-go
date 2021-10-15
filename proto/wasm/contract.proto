@@ -1,0 +1,20 @@
+syntax = "proto3";
+package liubaninc.m1.wasm;
+
+option go_package = "github.com/liubaninc/sdk-go/modules/wasm/types";
+
+import "gogoproto/gogo.proto";
+
+message Contract {
+  string creator = 1;
+  string name = 3;
+  string hash = 4;
+  string initArgs = 5;
+
+  enum Status {
+    NORMAL = 0;
+    FROZE = 1;
+  };
+  Status status = 15;
+  uint32 version = 16;
+}

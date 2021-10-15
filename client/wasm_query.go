@@ -3,7 +3,7 @@ package client
 import (
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/golang/protobuf/proto"
-	wasmtypes "github.com/liubaninc/m1/x/wasm/types"
+	wasmtypes "github.com/liubaninc/sdk-go/modules/wasm/types"
 )
 
 func (c Client) GetContract(name string) (*wasmtypes.QueryGetContractResponse, error) {

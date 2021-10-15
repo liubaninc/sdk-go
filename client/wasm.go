@@ -2,12 +2,12 @@ package client
 
 import (
 	"fmt"
-	sdktypes "github.com/liubaninc/m1/sdk"
+
 	"github.com/tendermint/tendermint/crypto/tmhash"
 )
 
 type TxSubmitBuilder struct {
-	sdktypes.SubmitRequest
+	SubmitRequest
 }
 
 func (t *TxSubmitBuilder) SetCreator(creator string) {
@@ -71,7 +71,7 @@ func (t *TxSubmitBuilder) Bytes() []byte {
 }
 
 type TxApproveBuilder struct {
-	sdktypes.ApproveRequest
+	ApproveRequest
 }
 
 func (t *TxApproveBuilder) SetCreator(creator string) {
@@ -111,7 +111,7 @@ func (t *TxApproveBuilder) Bytes() []byte {
 }
 
 type TxDeployBuilder struct {
-	sdktypes.DeployRequest
+	DeployRequest
 }
 
 func (t *TxDeployBuilder) SetCreator(creator string) {
@@ -159,7 +159,7 @@ func (t *TxDeployBuilder) Bytes() []byte {
 }
 
 type TxInvokeBuilder struct {
-	sdktypes.InvokeRequest
+	InvokeRequest
 }
 
 func (t *TxInvokeBuilder) SetCreator(creator string) {
@@ -211,7 +211,7 @@ func (t *TxInvokeBuilder) Bytes() []byte {
 }
 
 type TxUpgradeBuilder struct {
-	sdktypes.UpgradeRequest
+	UpgradeRequest
 }
 
 func (t *TxUpgradeBuilder) SetCreator(creator string) {
@@ -255,7 +255,7 @@ func (t *TxUpgradeBuilder) Bytes() []byte {
 }
 
 type TxFreezeBuilder struct {
-	sdktypes.FreezeRequest
+	FreezeRequest
 }
 
 func (t *TxFreezeBuilder) SetCreator(creator string) {
@@ -295,7 +295,7 @@ func (t *TxFreezeBuilder) Bytes() []byte {
 }
 
 type TxUnFreezeBuilder struct {
-	sdktypes.UnFreezeRequest
+	UnFreezeRequest
 }
 
 func (t *TxUnFreezeBuilder) SetCreator(creator string) {
@@ -335,7 +335,7 @@ func (t *TxUnFreezeBuilder) Bytes() []byte {
 }
 
 type TxDestroyBuilder struct {
-	sdktypes.DestroyRequest
+	DestroyRequest
 }
 
 func (t *TxDestroyBuilder) SetCreator(creator string) {

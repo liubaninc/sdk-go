@@ -1,15 +1,40 @@
 package client
 
 import (
+	"context"
 	"fmt"
 	"github.com/cosmos/cosmos-sdk/client/flags"
+	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/cosmos/cosmos-sdk/types/tx"
+	"github.com/cosmos/cosmos-sdk/x/genutil/types"
 	"github.com/golang/protobuf/proto"
 )
 
-func (c Client) GetNodeInfo() (*GetNodeInfoResponse, error) {
-	req := &GetNodeInfoRequest{}
+func (c Client) GetGenesisTxs() ([]*tx.GetTxResponse, error) {
+	resultGenesis, err := c.conn.Genesis(context.Background())
+	if err != nil {
+		return nil, err
+	}
+	appState, err := types.GenesisStateFromGenDoc(*resultGenesis.Genesis)
+	if err != nil {
+		return nil, err
+	}
+
+	genState := types.GetGenesisStateFromAppState(encodingConfig.Marshaler, appState)
+	txs := make([]*tx.GetTxResponse, len(genState.GenTxs))
+	for i, gtx := range genState.GenTxs {
+		txr, err := encodingConfig.TxConfig.TxDecoder()(gtx)
+		if err != nil {
+			panic(err)
+		}
+		txs[i].Tx = txr.(*tx.Tx)
+	}
+	return txs, nil
+}
+
+func (c Client) GetNodeInfo() (*tmservice.GetNodeInfoResponse, error) {
+	req := &tmservice.GetNodeInfoRequest{}
 	bytes, err := req.Marshal()
 	if err != nil {
 		panic(err)
@@ -19,15 +44,15 @@ func (c Client) GetNodeInfo() (*GetNodeInfoResponse, error) {
 		return nil, err
 	}
 
-	var resp GetNodeInfoResponse
+	var resp tmservice.GetNodeInfoResponse
 	if err := proto.Unmarshal(value, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
 }
 
-func (c Client) GetSyncing() (*GetSyncingResponse, error) {
-	req := &GetSyncingRequest{}
+func (c Client) GetSyncing() (*tmservice.GetSyncingResponse, error) {
+	req := &tmservice.GetSyncingRequest{}
 	bytes, err := req.Marshal()
 	if err != nil {
 		panic(err)
@@ -37,15 +62,15 @@ func (c Client) GetSyncing() (*GetSyncingResponse, error) {
 		return nil, err
 	}
 
-	var resp GetSyncingResponse
+	var resp tmservice.GetSyncingResponse
 	if err := proto.Unmarshal(value, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
 }
 
-func (c Client) GetLatestBlock() (*GetLatestBlockResponse, error) {
-	req := &GetLatestBlockRequest{}
+func (c Client) GetLatestBlock() (*tmservice.GetLatestBlockResponse, error) {
+	req := &tmservice.GetLatestBlockRequest{}
 	bytes, err := req.Marshal()
 	if err != nil {
 		panic(err)
@@ -55,15 +80,15 @@ func (c Client) GetLatestBlock() (*GetLatestBlockResponse, error) {
 		return nil, err
 	}
 
-	var resp GetLatestBlockResponse
+	var resp tmservice.GetLatestBlockResponse
 	if err := proto.Unmarshal(value, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
 }
 
-func (c Client) GetBlockByHeight(height int64) (*GetBlockByHeightResponse, error) {
-	req := &GetBlockByHeightRequest{
+func (c Client) GetBlockByHeight(height int64) (*tmservice.GetBlockByHeightResponse, error) {
+	req := &tmservice.GetBlockByHeightRequest{
 		Height: height,
 	}
 	bytes, err := req.Marshal()
@@ -75,15 +100,15 @@ func (c Client) GetBlockByHeight(height int64) (*GetBlockByHeightResponse, error
 		return nil, err
 	}
 
-	var resp GetBlockByHeightResponse
+	var resp tmservice.GetBlockByHeightResponse
 	if err := proto.Unmarshal(value, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
 }
 
-func (c Client) GetLatestValidatorSet() (*GetLatestValidatorSetResponse, error) {
-	req := &GetLatestValidatorSetRequest{}
+func (c Client) GetLatestValidatorSet() (*tmservice.GetLatestValidatorSetResponse, error) {
+	req := &tmservice.GetLatestValidatorSetRequest{}
 	bytes, err := req.Marshal()
 	if err != nil {
 		panic(err)
@@ -93,15 +118,15 @@ func (c Client) GetLatestValidatorSet() (*GetLatestValidatorSetResponse, error) 
 		return nil, err
 	}
 
-	var resp GetLatestValidatorSetResponse
+	var resp tmservice.GetLatestValidatorSetResponse
 	if err := proto.Unmarshal(value, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
 }
 
-func (c Client) GetValidatorSetByHeight(height int64) (*GetValidatorSetByHeightResponse, error) {
-	req := &GetValidatorSetByHeightRequest{
+func (c Client) GetValidatorSetByHeight(height int64) (*tmservice.GetValidatorSetByHeightResponse, error) {
+	req := &tmservice.GetValidatorSetByHeightRequest{
 		Height: height,
 	}
 	bytes, err := req.Marshal()
@@ -113,15 +138,15 @@ func (c Client) GetValidatorSetByHeight(height int64) (*GetValidatorSetByHeightR
 		return nil, err
 	}
 
-	var resp GetValidatorSetByHeightResponse
+	var resp tmservice.GetValidatorSetByHeightResponse
 	if err := proto.Unmarshal(value, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
 }
 
-func (c Client) GetTx(hash string) (*GetTxResponse, error) {
-	req := &GetTxRequest{
+func (c Client) GetTx(hash string) (*tx.GetTxResponse, error) {
+	req := &tx.GetTxRequest{
 		Hash: hash,
 	}
 	bytes, err := req.Marshal()
@@ -132,7 +157,7 @@ func (c Client) GetTx(hash string) (*GetTxResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	var resp GetTxResponse
+	var resp tx.GetTxResponse
 	if err := proto.Unmarshal(value, &resp); err != nil {
 		return nil, err
 	}

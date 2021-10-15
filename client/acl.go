@@ -1,11 +1,9 @@
 package client
 
-import (
-	sdktypes "github.com/liubaninc/m1/sdk"
-)
+import ()
 
 type SetRoleBuilder struct {
-	sdktypes.SetRoleRequest
+	SetRoleRequest
 }
 
 func (s *SetRoleBuilder) SetCreator(creator string) {

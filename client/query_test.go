@@ -5,6 +5,14 @@ import (
 	"testing"
 )
 
+func TestGetGenesisTxs(t *testing.T) {
+	resp, err := testClient.GetGenesisTxs()
+	if err != nil {
+		t.Fatal("GetGenesisTxs", err)
+	}
+	fmt.Println(resp)
+}
+
 func TestGetNodeInfo(t *testing.T) {
 	resp, err := testClient.GetNodeInfo()
 	if err != nil {

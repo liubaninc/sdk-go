@@ -1,0 +1,12 @@
+syntax = "proto3";
+package liubaninc.m1.utxo;
+
+option go_package = "github.com/liubaninc/sdk-go/modules/utxo/types";
+
+import "cosmos/base/v1beta1/coin.proto";
+import "utxo/input.proto";
+
+message Base {
+  repeated Input inputs = 10;
+  repeated Output outputs = 11;
+}

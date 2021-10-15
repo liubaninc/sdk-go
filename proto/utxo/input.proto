@@ -1,0 +1,31 @@
+syntax = "proto3";
+package liubaninc.m1.utxo;
+
+option go_package = "github.com/liubaninc/sdk-go/modules/utxo/types";
+
+import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+message Input {
+  string refTx = 3;
+  int32 refMsg = 4;
+  int32 refOffset = 5;
+  string addr = 6;
+  cosmos.base.v1beta1.Coin amount = 7 [(gogoproto.nullable) = false];
+  int64 frozen = 8;
+}
+
+message Output {
+  string addr = 3;
+  cosmos.base.v1beta1.Coin amount = 4 [(gogoproto.nullable) = false];
+  int64 frozen = 5;
+  enum Purpose {
+    TRANSER = 0;
+    CHANGE = 1;
+    FEE = 2;
+    ISSUE = 3;
+    BURN = 4;
+    Transient = 5;
+  }
+  Purpose purpose = 6;
+}

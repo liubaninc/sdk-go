@@ -1,0 +1,12 @@
+syntax = "proto3";
+package liubaninc.m1.account;
+
+option go_package = "github.com/liubaninc/sdk-go/modules/account/types";
+
+import "gogoproto/gogo.proto";
+
+message Account {
+  string creator = 1;
+  string address = 2;
+  repeated string roles = 4;
+}

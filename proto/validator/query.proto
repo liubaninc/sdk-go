@@ -1,0 +1,64 @@
+syntax = "proto3";
+package liubaninc.m1.validator;
+
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "cosmos/staking/v1beta1/staking.proto";
+// this line is used by starport scaffolding # 1
+import "validator/validator.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/liubaninc/sdk-go/modules/validator/types";
+
+// Query defines the gRPC querier service.
+service Query {
+    // this line is used by starport scaffolding # 2
+
+	// Queries a validator by id.
+	rpc Validator(QueryGetValidatorRequest) returns (QueryGetValidatorResponse) {
+		option (google.api.http).get = "/liubaninc/m1/validator/validator/{address}";
+	}
+
+	// Queries a list of validator items.
+	rpc ValidatorAll(QueryAllValidatorRequest) returns (QueryAllValidatorResponse) {
+		option (google.api.http).get = "/liubaninc/m1/validator/validator";
+	}
+
+	// HistoricalInfo queries the historical info for given height.
+	rpc HistoricalInfo(QueryHistoricalInfoRequest) returns (QueryHistoricalInfoResponse) {
+		option (google.api.http).get = "/liubaninc/m1/historical_info/{height}";
+	}
+
+}
+
+// this line is used by starport scaffolding # 3
+message QueryGetValidatorRequest {
+	string address = 1;
+}
+
+message QueryGetValidatorResponse {
+	Validator Validator = 1;
+}
+
+message QueryAllValidatorRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllValidatorResponse {
+	repeated Validator Validator = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// QueryHistoricalInfoRequest is request type for the Query/HistoricalInfo RPC
+// method.
+message QueryHistoricalInfoRequest {
+	// height defines at which height to query the historical info.
+	int64 height = 1;
+}
+
+// QueryHistoricalInfoResponse is response type for the Query/HistoricalInfo RPC
+// method.
+message QueryHistoricalInfoResponse {
+	// hist defines the historical info at the given height.
+	cosmos.staking.v1beta1.HistoricalInfo hist = 1;
+}

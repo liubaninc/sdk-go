@@ -3,7 +3,7 @@ package client
 import (
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/golang/protobuf/proto"
-	validatortypes "github.com/liubaninc/m1/x/validator/types"
+	validatortypes "github.com/liubaninc/sdk-go/modules/validator/types"
 )
 
 func (c Client) GetValidator(address string) (*validatortypes.QueryGetValidatorResponse, error) {

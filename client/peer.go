@@ -1,9 +1,7 @@
 package client
 
-import sdktypes "github.com/liubaninc/m1/sdk"
-
 type TxPeerCreateBuilder struct {
-	sdktypes.CreatePeerRequest
+	CreatePeerRequest
 }
 
 func (t *TxPeerCreateBuilder) SetCreator(creator string) {
@@ -47,7 +45,7 @@ func (t *TxPeerCreateBuilder) Bytes() []byte {
 }
 
 type TxPeerUpdateBuilder struct {
-	sdktypes.UpdatePeerRequest
+	UpdatePeerRequest
 }
 
 func (t *TxPeerUpdateBuilder) SetCreator(creator string) {
@@ -91,7 +89,7 @@ func (t *TxPeerUpdateBuilder) Bytes() []byte {
 }
 
 type TxPeerDeleteBuilder struct {
-	sdktypes.DeletePeerRequest
+	DeletePeerRequest
 }
 
 func (t *TxPeerDeleteBuilder) SetCreator(creator string) {

@@ -1,0 +1,9 @@
+syntax = "proto3";
+package liubaninc.m1.validator;
+
+option go_package = "github.com/liubaninc/sdk-go/modules/validator/types";
+
+message LastValidatorPower {
+  string index = 2;
+  int64 power = 3;
+}

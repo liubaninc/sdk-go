@@ -1,0 +1,46 @@
+syntax = "proto3";
+package liubaninc.m1.validator;
+
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/liubaninc/sdk-go/modules/validator/types";
+
+import "utxo/base.proto";
+import "validator/validator.proto";
+
+// Msg defines the Msg service.
+service Msg {
+    // this line is used by starport scaffolding # proto/tx/rpc
+  rpc LeaveValidator(MsgLeaveValidator) returns (MsgLeaveValidatorResponse);
+  rpc EditValidator(MsgEditValidator) returns (MsgEditValidatorResponse);
+  rpc CreateValidator(MsgCreateValidator) returns (MsgCreateValidatorResponse);
+}
+
+// this line is used by starport scaffolding # proto/tx/message
+message MsgLeaveValidator {
+  string creator = 1;
+  utxo.Base base = 2;
+}
+
+message MsgLeaveValidatorResponse {
+}
+
+
+message MsgEditValidator {
+  string creator = 1;
+  utxo.Base base = 2;
+  Description description = 5;
+}
+
+message MsgEditValidatorResponse {
+}
+
+message MsgCreateValidator {
+  string creator = 1;
+  utxo.Base base = 2;
+  string pubKey = 3;
+  Description description = 5;
+}
+
+message MsgCreateValidatorResponse {
+}

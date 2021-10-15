@@ -3,7 +3,7 @@ package client
 import (
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/golang/protobuf/proto"
-	acctypes "github.com/liubaninc/m1/x/account/types"
+	acctypes "github.com/liubaninc/sdk-go/modules/account/types"
 )
 
 func (c Client) GetAccountACL(address string) (*acctypes.QueryGetAccountResponse, error) {

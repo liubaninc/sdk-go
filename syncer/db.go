@@ -1,0 +1,38 @@
+package syncer
+
+import (
+	"fmt"
+	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+)
+
+func MustNewDB(mode string, dsn string) *gorm.DB {
+	db, err := NewDB(mode, dsn)
+	if err != nil {
+		panic(err)
+	}
+	return db
+}
+
+func NewDB(mode string, dsn string) (*gorm.DB, error) {
+	var conn gorm.Dialector
+	switch mode {
+	case "sqlite":
+		conn = sqlite.Open(dsn)
+	case "mysql":
+		conn = mysql.Open(dsn)
+	case "postgres":
+		conn = postgres.Open(dsn)
+	default:
+		return nil, fmt.Errorf("invalid db engine. supported types: sqlite, mysql, postgres")
+	}
+
+	db, err := gorm.Open(conn)
+	if err != nil {
+		return nil, err
+	}
+
+	return db, nil
+}

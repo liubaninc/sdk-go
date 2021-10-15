@@ -1,0 +1,22 @@
+syntax = "proto3";
+package liubaninc.m1.utxo;
+
+option go_package = "github.com/liubaninc/sdk-go/modules/utxo/types";
+
+import "gogoproto/gogo.proto";
+import "cosmos/bank/v1beta1/bank.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+message Token {
+  string creator = 1;
+  string base = 2;
+  repeated cosmos.base.v1beta1.Coin issued = 3 [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+  repeated cosmos.base.v1beta1.Coin burned = 4 [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+}
+
+message TokenDetail {
+  string creator = 1;
+  cosmos.bank.v1beta1.Metadata metadata = 2;
+  repeated cosmos.base.v1beta1.Coin issued = 3 [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+  repeated cosmos.base.v1beta1.Coin burned = 4 [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+}

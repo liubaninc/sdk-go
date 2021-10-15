@@ -1,0 +1,14 @@
+syntax = "proto3";
+package liubaninc.m1.peer;
+
+// this line is used by starport scaffolding # genesis/proto/import
+import "peer/peer.proto";
+
+option go_package = "github.com/liubaninc/sdk-go/modules/peer/types";
+
+// GenesisState defines the peer module's genesis state.
+message GenesisState {
+    // this line is used by starport scaffolding # genesis/proto/state
+		repeated Peer peerList = 1; // this line is used by starport scaffolding # genesis/proto/stateField
+    // this line is used by starport scaffolding # ibc/genesis/proto
+}

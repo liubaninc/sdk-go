@@ -7,6 +7,7 @@ require (
 	github.com/gogo/protobuf v1.3.3
 	github.com/golang/protobuf v1.5.2
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
+	github.com/regen-network/cosmos-proto v0.3.1 // indirect
 	github.com/tendermint/spm v0.1.6
 	github.com/tendermint/tendermint v0.34.14
 	google.golang.org/genproto v0.0.0-20211013025323-ce878158c4d4

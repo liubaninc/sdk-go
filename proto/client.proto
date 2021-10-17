@@ -12,7 +12,7 @@ message GenKeyRequest {
 }
 
 message GenKeyResponse {
-
+  
 }
 
 message SignTxRequest {
@@ -159,4 +159,20 @@ message UpdatePeerRequest {
 message DeletePeerRequest {
   BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
   string index = 2;
+}
+
+message CreateDataRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  string content = 2;
+}
+
+message UpdateDataRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  uint64 id = 2;
+  string content = 3;
+}
+
+message DeleteDataRequest {
+  BuildUnsignedTxBase base = 1 [(gogoproto.nullable) = false];
+  uint64 id = 2;
 }

@@ -1,0 +1,43 @@
+syntax = "proto3";
+package liubaninc.m1.storage;
+
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+// this line is used by starport scaffolding # 1
+import "storage/data.proto";
+
+option go_package = "github.com/liubaninc/sdk-go/modules/storage/types";
+
+// Query defines the gRPC querier service.
+service Query {
+    // this line is used by starport scaffolding # 2
+
+	// Queries a data by id.
+	rpc Data(QueryGetDataRequest) returns (QueryGetDataResponse) {
+		option (google.api.http).get = "/liubaninc/m1/storage/data/{id}";
+	}
+
+	// Queries a list of data items.
+	rpc DataAll(QueryAllDataRequest) returns (QueryAllDataResponse) {
+		option (google.api.http).get = "/liubaninc/m1/storage/data";
+	}
+
+}
+
+// this line is used by starport scaffolding # 3
+message QueryGetDataRequest {
+	uint64 id = 1;
+}
+
+message QueryGetDataResponse {
+	Data Data = 1;
+}
+
+message QueryAllDataRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllDataResponse {
+	repeated Data Data = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}

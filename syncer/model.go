@@ -165,14 +165,19 @@ type Peer struct {
 	Moniker string
 	Height  int64
 	Time    time.Time
+
+	Delete bool
 }
 
 type Validator struct {
 	gorm.Model
-	Name   string
-	PubKey string `gorm:"unique"`
-	Pow    int64
-	NodeID string
-	Height int64
-	Time   time.Time
+	Creator string `gorm:"unique"`
+	Name    string
+	PubKey  string `gorm:"unique"`
+	Pow     int64
+	NodeID  string
+	Height  int64
+	Time    time.Time
+
+	Delete bool
 }

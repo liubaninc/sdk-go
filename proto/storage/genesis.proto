@@ -1,0 +1,15 @@
+syntax = "proto3";
+package liubaninc.m1.storage;
+
+// this line is used by starport scaffolding # genesis/proto/import
+import "storage/data.proto";
+
+option go_package = "github.com/liubaninc/sdk-go/modules/storage/types";
+
+// GenesisState defines the storage module's genesis state.
+message GenesisState {
+    // this line is used by starport scaffolding # genesis/proto/state
+		repeated Data dataList = 1; // this line is used by starport scaffolding # genesis/proto/stateField
+		uint64 dataCount = 2; // this line is used by starport scaffolding # genesis/proto/stateField
+    // this line is used by starport scaffolding # ibc/genesis/proto
+}

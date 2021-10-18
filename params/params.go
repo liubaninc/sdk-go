@@ -5,6 +5,7 @@ import (
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	accounttypes "github.com/liubaninc/sdk-go/modules/account/types"
 	peertypes "github.com/liubaninc/sdk-go/modules/peer/types"
+	storagetypes "github.com/liubaninc/sdk-go/modules/storage/types"
 	utxotypes "github.com/liubaninc/sdk-go/modules/utxo/types"
 	validatortypes "github.com/liubaninc/sdk-go/modules/validator/types"
 	wasmtypes "github.com/liubaninc/sdk-go/modules/wasm/types"
@@ -20,6 +21,7 @@ func MakeEncodingConfig() cosmoscmd.EncodingConfig {
 	wasmtypes.RegisterCodec(encodingConfig.Amino)
 	peertypes.RegisterCodec(encodingConfig.Amino)
 	validatortypes.RegisterCodec(encodingConfig.Amino)
+	storagetypes.RegisterCodec(encodingConfig.Amino)
 
 	authtypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 	banktypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
@@ -28,6 +30,7 @@ func MakeEncodingConfig() cosmoscmd.EncodingConfig {
 	wasmtypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 	peertypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 	validatortypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	storagetypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 
 	return encodingConfig
 }

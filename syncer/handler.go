@@ -5,11 +5,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	peertypes "github.com/liubaninc/sdk-go/modules/peer/types"
-	validatortypes "github.com/liubaninc/sdk-go/modules/validator/types"
 	"os"
 	"strings"
 	"time"
+
+	peertypes "github.com/liubaninc/sdk-go/modules/peer/types"
+	storagetypes "github.com/liubaninc/sdk-go/modules/storage/types"
+	validatortypes "github.com/liubaninc/sdk-go/modules/validator/types"
 
 	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
 	"github.com/cosmos/cosmos-sdk/types/tx"
@@ -138,9 +140,9 @@ func (h handler) HandleGenesisTxs(tx []*tx.GetTxResponse) error {
 		var validators []*Validator
 		for _, validator := range resValidtor.Validator {
 			validators = append(validators, &Validator{
-				Name:   validator.Creator,
-				PubKey: validator.PubKey,
-				Pow:    validator.Power,
+				Creator: validator.Creator,
+				PubKey:  validator.PubKey,
+				Pow:     validator.Power,
 			})
 		}
 
@@ -909,6 +911,7 @@ func (h handler) handleMsg(db *gorm.DB, msg sdk.Msg, mtx *Transaction, mblk *Blo
 			return err
 		}
 		mtx.peerMap[mPeer.NodeID] = mPeer
+		mPeer.Delete = true
 	case *validatortypes.MsgCreateValidator:
 		addrChanges := amountChanged(msg.Base)
 		for addr, changes := range addrChanges {
@@ -933,11 +936,11 @@ func (h handler) handleMsg(db *gorm.DB, msg sdk.Msg, mtx *Transaction, mblk *Blo
 		}
 		mtx.addressMap[maddr.Address] = maddr
 
-		mValidator, err := getValidator(msg.PubKey, mblk, db)
+		mValidator, err := getValidator(msg.Creator, mblk, db)
 		if err != nil {
 			return err
 		}
-		mtx.validatorMap[mValidator.PubKey] = mValidator
+		mtx.validatorMap[mValidator.Creator] = mValidator
 		mValidator.PubKey = msg.PubKey
 	case *validatortypes.MsgEditValidator:
 		addrChanges := amountChanged(msg.Base)
@@ -962,12 +965,11 @@ func (h handler) handleMsg(db *gorm.DB, msg sdk.Msg, mtx *Transaction, mblk *Blo
 			return err
 		}
 		mtx.addressMap[maddr.Address] = maddr
-
-		//mValidator, err := getValidator(msg.PubKey, mblk, db)
-		//if err != nil {
-		//	return err
-		//}
-		//mtx.validatorMap[mValidator.PubKey] = mValidator
+		mValidator, err := getValidator(msg.Creator, mblk, db)
+		if err != nil {
+			return err
+		}
+		mtx.validatorMap[mValidator.Creator] = mValidator
 	case *validatortypes.MsgLeaveValidator:
 		addrChanges := amountChanged(msg.Base)
 		for addr, changes := range addrChanges {
@@ -992,11 +994,81 @@ func (h handler) handleMsg(db *gorm.DB, msg sdk.Msg, mtx *Transaction, mblk *Blo
 		}
 		mtx.addressMap[maddr.Address] = maddr
 
-		//mValidator, err := getValidator(msg.PubKey, mblk, db)
-		//if err != nil {
-		//	return err
-		//}
-		//mtx.validatorMap[mValidator.PubKey] = mValidator
+		mValidator, err := getValidator(msg.Creator, mblk, db)
+		if err != nil {
+			return err
+		}
+		mtx.validatorMap[mValidator.Creator] = mValidator
+		mValidator.Delete = true
+	case *storagetypes.MsgCreateData:
+		addrChanges := amountChanged(msg.Base)
+		for addr, changes := range addrChanges {
+			maddr, err := getAddress(addr, mblk, db)
+			if err != nil {
+				return err
+			}
+			mtx.addressMap[addr] = maddr
+			maddr.amounts = maddr.amounts.Add(changes...)
+
+			for _, change := range changes {
+				masset, err := getAsset(change.Denom, mblk, db)
+				if err != nil {
+					return err
+				}
+				mtx.assetMap[masset.Name] = masset
+			}
+		}
+		maddr, err := getAddress(msg.Creator, mblk, db)
+		if err != nil {
+			return err
+		}
+		mtx.addressMap[maddr.Address] = maddr
+	case *storagetypes.MsgUpdateData:
+		addrChanges := amountChanged(msg.Base)
+		for addr, changes := range addrChanges {
+			maddr, err := getAddress(addr, mblk, db)
+			if err != nil {
+				return err
+			}
+			mtx.addressMap[addr] = maddr
+			maddr.amounts = maddr.amounts.Add(changes...)
+
+			for _, change := range changes {
+				masset, err := getAsset(change.Denom, mblk, db)
+				if err != nil {
+					return err
+				}
+				mtx.assetMap[masset.Name] = masset
+			}
+		}
+		maddr, err := getAddress(msg.Creator, mblk, db)
+		if err != nil {
+			return err
+		}
+		mtx.addressMap[maddr.Address] = maddr
+	case *storagetypes.MsgDeleteData:
+		addrChanges := amountChanged(msg.Base)
+		for addr, changes := range addrChanges {
+			maddr, err := getAddress(addr, mblk, db)
+			if err != nil {
+				return err
+			}
+			mtx.addressMap[addr] = maddr
+			maddr.amounts = maddr.amounts.Add(changes...)
+
+			for _, change := range changes {
+				masset, err := getAsset(change.Denom, mblk, db)
+				if err != nil {
+					return err
+				}
+				mtx.assetMap[masset.Name] = masset
+			}
+		}
+		maddr, err := getAddress(msg.Creator, mblk, db)
+		if err != nil {
+			return err
+		}
+		mtx.addressMap[maddr.Address] = maddr
 	default:
 		return fmt.Errorf("not support route %v, type %v", msg.Route(), msg.Type())
 	}
@@ -1132,10 +1204,10 @@ func getValidator(name string, mblk *Block, db *gorm.DB) (*Validator, error) {
 	}
 
 	var mValidator Validator
-	if result := db.Find(&mValidator, "pub_key = ?", name); result.Error != nil {
+	if result := db.Find(&mValidator, "creator = ?", name); result.Error != nil {
 		return nil, result.Error
 	} else if result.RowsAffected == 0 {
-		mValidator.PubKey = name
+		mValidator.Creator = name
 		mValidator.Height = mblk.Height
 		mValidator.Time = mblk.Time
 	}

@@ -1,0 +1,12 @@
+syntax = "proto3";
+package liubaninc.m1.storage;
+
+option go_package = "github.com/liubaninc/sdk-go/modules/storage/types";
+
+import "gogoproto/gogo.proto";
+
+message Data {
+  string creator = 1;
+  uint64 id = 2;
+  string content = 3; 
+}

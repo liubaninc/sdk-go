@@ -1,0 +1,974 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "区块链浏览器后端API接口文档",
+        "title": "区块链浏览器",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:8080",
+    "paths": {
+        "/addresses": {
+            "get": {
+                "description": "分页获取账户地址列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "账户地址"
+                ],
+                "summary": "账户地址列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/addresses/{name}": {
+            "get": {
+                "description": "获取账户地址信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "账户地址"
+                ],
+                "summary": "账户地址信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "账户地址",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/addresses/{name}/assets": {
+            "get": {
+                "description": "分页获取账户地址创建的相关资产",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "账户地址"
+                ],
+                "summary": "账户地址相关资产",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "账户地址",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/addresses/{name}/contractcodes": {
+            "get": {
+                "description": "分页获取账户地址提交的相关合约代码",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "账户地址"
+                ],
+                "summary": "获取账户地址相关交易",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "账户地址",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/addresses/{name}/contracts": {
+            "get": {
+                "description": "分页获取账户地址创建的相关合约",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "账户地址"
+                ],
+                "summary": "账户地址相关合约",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "账户地址",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/addresses/{name}/transactions": {
+            "get": {
+                "description": "分页获取账户地址相关交易",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "账户地址"
+                ],
+                "summary": "账户地址相关交易",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "账户地址",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets": {
+            "get": {
+                "description": "分页获取资产列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "资产"
+                ],
+                "summary": "资产列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":!200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/{name}": {
+            "get": {
+                "description": "获取资产信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "资产"
+                ],
+                "summary": "资产信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "资产名称",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/{name}/transactions": {
+            "get": {
+                "description": "分页获取资产相关交易",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "资产"
+                ],
+                "summary": "资产相关相关交易",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "资产名称",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/blockchain": {
+            "get": {
+                "description": "获取区块链总览信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "区块"
+                ],
+                "summary": "区块链总览",
+                "responses": {
+                    "200": {
+                        "description": "code\":!200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/blocks": {
+            "get": {
+                "description": "分页获取区块列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "区块"
+                ],
+                "summary": "区块列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":!200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/blocks/{name}": {
+            "get": {
+                "description": "获取区块信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "区块"
+                ],
+                "summary": "区块信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "区块高度/区块哈希",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/charts": {
+            "get": {
+                "description": "获取区块链TPS统计信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "区块"
+                ],
+                "summary": "区块链TPS统计",
+                "responses": {
+                    "200": {
+                        "description": "code\":!200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/contractcodes": {
+            "get": {
+                "description": "分页获取合约代码列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "合约代码"
+                ],
+                "summary": "合约代码列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":!200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/contractcodes/{name}/transactions": {
+            "get": {
+                "description": "分页获取合约代码相关交易",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "合约代码"
+                ],
+                "summary": "合约代码相关交易",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "合约代码哈希",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/contractcodess/{name}": {
+            "get": {
+                "description": "获取合约代码信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "合约代码"
+                ],
+                "summary": "合约代码信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "合约代码哈希",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/contracts": {
+            "get": {
+                "description": "分页获取部署合约列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "部署合约"
+                ],
+                "summary": "部署合约列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":!200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/contracts/{name}": {
+            "get": {
+                "description": "获取部署合约信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "部署合约"
+                ],
+                "summary": "部署合约信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "合约名称",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/contracts/{name}/transactions": {
+            "get": {
+                "description": "分页获取部署合约相关交易",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "部署合约"
+                ],
+                "summary": "部署合约相关交易",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "合约名称",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/peers": {
+            "get": {
+                "description": "分页获取节点列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "节点"
+                ],
+                "summary": "节点列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":!200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/peers/{name}": {
+            "get": {
+                "description": "获取节点信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "节点"
+                ],
+                "summary": "节点信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "节点ID",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/search/{name}": {
+            "get": {
+                "description": "搜索区块高度、区块哈希、交易哈希、账户地址、资产、合约、合约代码",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "区块"
+                ],
+                "summary": "搜索",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "未知",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions": {
+            "get": {
+                "description": "分页获取交易列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "交易"
+                ],
+                "summary": "交易列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":!200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/{name}": {
+            "get": {
+                "description": "获取交易信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "交易"
+                ],
+                "summary": "交易信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "交易哈希",
+                        "name": "hash",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/validators": {
+            "get": {
+                "description": "分页获验证者列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "验证者"
+                ],
+                "summary": "验证者列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "个数",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":!200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/validators/{name}": {
+            "get": {
+                "description": "获取验证者信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "验证者"
+                ],
+                "summary": "验证者信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "账户地址",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"data\":null,\"msg\":\"\",\"detail\"：\"\"}",
+                        "schema": {
+                            "$ref": "#/definitions/syncer.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "syncer.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "detail": {
+                    "type": "string"
+                },
+                "msg": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

@@ -4,7 +4,16 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
-
+// @Summary 验证者列表
+// @Description 分页获验证者列表
+// @Tags 验证者
+// @accept json
+// @Produce  json
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"执行成功"}
+// @Failure 200 {object} Response {"code":!200,"data":null,"msg":"","detail"：""}
+// @Router /validators [get]
 func (a *api) GetValidators(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,
@@ -60,6 +69,14 @@ func (a *api) GetValidators(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 验证者信息
+// @Description 获取验证者信息
+// @Tags 验证者
+// @accept json
+// @Produce  json
+// @Param name path string true "账户地址"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /validators/{name} [get]
 func (a *api) GetValidator(c *gin.Context) {
 	response := &Response{
 		Code: OKCode,

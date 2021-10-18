@@ -5,6 +5,16 @@ import (
 	"net/http"
 )
 
+// @Summary 合约代码列表
+// @Description 分页获取合约代码列表
+// @Tags 合约代码
+// @accept json
+// @Produce  json
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"执行成功"}
+// @Failure 200 {object} Response {"code":!200,"data":null,"msg":"","detail"：""}
+// @Router /contractcodes [get]
 func (a *api) GetContractCodes(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,
@@ -60,6 +70,14 @@ func (a *api) GetContractCodes(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 合约代码信息
+// @Description 获取合约代码信息
+// @Tags 合约代码
+// @accept json
+// @Produce  json
+// @Param name path string true "合约代码哈希"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /contractcodess/{name} [get]
 func (a *api) GetContractCode(c *gin.Context) {
 	response := &Response{
 		Code: OKCode,
@@ -79,6 +97,16 @@ func (a *api) GetContractCode(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 合约代码相关交易
+// @Description 分页获取合约代码相关交易
+// @Tags 合约代码
+// @accept json
+// @Produce  json
+// @Param name path string true "合约代码哈希"
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /contractcodes/{name}/transactions [get]
 func (a *api) GetContractCodeTransactions(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,

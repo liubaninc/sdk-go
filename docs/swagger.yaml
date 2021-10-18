@@ -1,0 +1,638 @@
+definitions:
+  syncer.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      detail:
+        type: string
+      msg:
+        type: string
+    type: object
+host: 127.0.0.1:8080
+info:
+  contact:
+    name: API Support
+    url: http://www.swagger.io/support
+  description: 区块链浏览器后端API接口文档
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: 区块链浏览器
+  version: "1.0"
+paths:
+  /addresses:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取账户地址列表
+      parameters:
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 账户地址列表
+      tags:
+      - 账户地址
+  /addresses/{name}:
+    get:
+      consumes:
+      - application/json
+      description: 获取账户地址信息
+      parameters:
+      - description: 账户地址
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 账户地址信息
+      tags:
+      - 账户地址
+  /addresses/{name}/assets:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取账户地址创建的相关资产
+      parameters:
+      - description: 账户地址
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 账户地址相关资产
+      tags:
+      - 账户地址
+  /addresses/{name}/contractcodes:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取账户地址提交的相关合约代码
+      parameters:
+      - description: 账户地址
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 获取账户地址相关交易
+      tags:
+      - 账户地址
+  /addresses/{name}/contracts:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取账户地址创建的相关合约
+      parameters:
+      - description: 账户地址
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 账户地址相关合约
+      tags:
+      - 账户地址
+  /addresses/{name}/transactions:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取账户地址相关交易
+      parameters:
+      - description: 账户地址
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 账户地址相关交易
+      tags:
+      - 账户地址
+  /assets:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取资产列表
+      parameters:
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":!200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 资产列表
+      tags:
+      - 资产
+  /assets/{name}:
+    get:
+      consumes:
+      - application/json
+      description: 获取资产信息
+      parameters:
+      - description: 资产名称
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 资产信息
+      tags:
+      - 资产
+  /assets/{name}/transactions:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取资产相关交易
+      parameters:
+      - description: 资产名称
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 资产相关相关交易
+      tags:
+      - 资产
+  /blockchain:
+    get:
+      consumes:
+      - application/json
+      description: 获取区块链总览信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":!200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 区块链总览
+      tags:
+      - 区块
+  /blocks:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取区块列表
+      parameters:
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":!200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 区块列表
+      tags:
+      - 区块
+  /blocks/{name}:
+    get:
+      consumes:
+      - application/json
+      description: 获取区块信息
+      parameters:
+      - description: 区块高度/区块哈希
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 区块信息
+      tags:
+      - 区块
+  /charts:
+    get:
+      consumes:
+      - application/json
+      description: 获取区块链TPS统计信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":!200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 区块链TPS统计
+      tags:
+      - 区块
+  /contractcodes:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取合约代码列表
+      parameters:
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":!200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 合约代码列表
+      tags:
+      - 合约代码
+  /contractcodes/{name}/transactions:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取合约代码相关交易
+      parameters:
+      - description: 合约代码哈希
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 合约代码相关交易
+      tags:
+      - 合约代码
+  /contractcodess/{name}:
+    get:
+      consumes:
+      - application/json
+      description: 获取合约代码信息
+      parameters:
+      - description: 合约代码哈希
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 合约代码信息
+      tags:
+      - 合约代码
+  /contracts:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取部署合约列表
+      parameters:
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":!200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 部署合约列表
+      tags:
+      - 部署合约
+  /contracts/{name}:
+    get:
+      consumes:
+      - application/json
+      description: 获取部署合约信息
+      parameters:
+      - description: 合约名称
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 部署合约信息
+      tags:
+      - 部署合约
+  /contracts/{name}/transactions:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取部署合约相关交易
+      parameters:
+      - description: 合约名称
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 部署合约相关交易
+      tags:
+      - 部署合约
+  /peers:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取节点列表
+      parameters:
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":!200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 节点列表
+      tags:
+      - 节点
+  /peers/{name}:
+    get:
+      consumes:
+      - application/json
+      description: 获取节点信息
+      parameters:
+      - description: 节点ID
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 节点信息
+      tags:
+      - 节点
+  /search/{name}:
+    get:
+      consumes:
+      - application/json
+      description: 搜索区块高度、区块哈希、交易哈希、账户地址、资产、合约、合约代码
+      parameters:
+      - description: 未知
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 搜索
+      tags:
+      - 区块
+  /transactions:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取交易列表
+      parameters:
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":!200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 交易列表
+      tags:
+      - 交易
+  /transactions/{name}:
+    get:
+      consumes:
+      - application/json
+      description: 获取交易信息
+      parameters:
+      - description: 交易哈希
+        in: path
+        name: hash
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 交易信息
+      tags:
+      - 交易
+  /validators:
+    get:
+      consumes:
+      - application/json
+      description: 分页获验证者列表
+      parameters:
+      - description: 页码
+        in: query
+        name: page_num
+        type: integer
+      - description: 个数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":!200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 验证者列表
+      tags:
+      - 验证者
+  /validators/{name}:
+    get:
+      consumes:
+      - application/json
+      description: 获取验证者信息
+      parameters:
+      - description: 账户地址
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":"","detail"：""}
+          schema:
+            $ref: '#/definitions/syncer.Response'
+      summary: 验证者信息
+      tags:
+      - 验证者
+swagger: "2.0"

@@ -5,6 +5,16 @@ import (
 	"net/http"
 )
 
+// @Summary 节点列表
+// @Description 分页获取节点列表
+// @Tags 节点
+// @accept json
+// @Produce  json
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"执行成功"}
+// @Failure 200 {object} Response {"code":!200,"data":null,"msg":"","detail"：""}
+// @Router /peers [get]
 func (a *api) GetPeers(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,
@@ -60,6 +70,14 @@ func (a *api) GetPeers(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 节点信息
+// @Description 获取节点信息
+// @Tags 节点
+// @accept json
+// @Produce  json
+// @Param name path string true "节点ID"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /peers/{name} [get]
 func (a *api) GetPeer(c *gin.Context) {
 	response := &Response{
 		Code: OKCode,

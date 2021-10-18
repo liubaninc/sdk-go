@@ -5,6 +5,16 @@ import (
 	"net/http"
 )
 
+// @Summary 交易列表
+// @Description 分页获取交易列表
+// @Tags 交易
+// @accept json
+// @Produce  json
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"执行成功"}
+// @Failure 200 {object} Response {"code":!200,"data":null,"msg":"","detail"：""}
+// @Router /transactions [get]
 func (a *api) GetTransactions(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,
@@ -66,6 +76,14 @@ func (a *api) GetTransactions(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 交易信息
+// @Description 获取交易信息
+// @Tags 交易
+// @accept json
+// @Produce  json
+// @Param hash path string true "交易哈希"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /transactions/{name} [get]
 func (a *api) GetTransaction(c *gin.Context) {
 	response := &Response{
 		Code: OKCode,

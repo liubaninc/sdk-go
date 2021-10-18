@@ -5,6 +5,15 @@ import (
 	"net/http"
 )
 
+// @Summary 账户地址列表
+// @Description 分页获取账户地址列表
+// @Tags 账户地址
+// @accept json
+// @Produce  json
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /addresses [get]
 func (a *api) GetAddresses(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,
@@ -60,6 +69,14 @@ func (a *api) GetAddresses(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 账户地址信息
+// @Description 获取账户地址信息
+// @Tags 账户地址
+// @accept json
+// @Produce  json
+// @Param name path string true "账户地址"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /addresses/{name} [get]
 func (a *api) GetAddress(c *gin.Context) {
 	response := &Response{
 		Code: OKCode,
@@ -79,6 +96,16 @@ func (a *api) GetAddress(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 账户地址相关交易
+// @Description 分页获取账户地址相关交易
+// @Tags 账户地址
+// @accept json
+// @Produce  json
+// @Param name path string true "账户地址"
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /addresses/{name}/transactions [get]
 func (a *api) GetAddressTransactions(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,
@@ -139,6 +166,16 @@ func (a *api) GetAddressTransactions(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 账户地址相关资产
+// @Description 分页获取账户地址创建的相关资产
+// @Tags 账户地址
+// @accept json
+// @Produce  json
+// @Param name path string true "账户地址"
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /addresses/{name}/assets [get]
 func (a *api) GetAddressAssets(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,
@@ -185,6 +222,16 @@ func (a *api) GetAddressAssets(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 账户地址相关合约
+// @Description 分页获取账户地址创建的相关合约
+// @Tags 账户地址
+// @accept json
+// @Produce  json
+// @Param name path string true "账户地址"
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /addresses/{name}/contracts [get]
 func (a *api) GetAddressContracts(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,
@@ -231,6 +278,16 @@ func (a *api) GetAddressContracts(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 获取账户地址相关交易
+// @Description 分页获取账户地址提交的相关合约代码
+// @Tags 账户地址
+// @accept json
+// @Produce  json
+// @Param name path string true "账户地址"
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /addresses/{name}/contractcodes [get]
 func (a *api) GetAddressContractCodes(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,

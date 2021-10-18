@@ -8,6 +8,14 @@ import (
 	"strconv"
 )
 
+// @Summary 区块链TPS统计
+// @Description 获取区块链TPS统计信息
+// @Tags 区块
+// @accept json
+// @Produce  json
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"执行成功"}
+// @Failure 200 {object} Response {"code":!200,"data":null,"msg":"","detail"：""}
+// @Router /charts [get]
 func (a *api) Charts(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,
@@ -64,6 +72,14 @@ func (a *api) Charts(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 搜索
+// @Description 搜索区块高度、区块哈希、交易哈希、账户地址、资产、合约、合约代码
+// @Tags 区块
+// @accept json
+// @Produce  json
+// @Param name path string true "未知"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /search/{name} [get]
 func (a *api) Search(c *gin.Context) {
 	response := &Response{
 		Code: OKCode,
@@ -124,6 +140,14 @@ func (a *api) Search(c *gin.Context) {
 	return
 }
 
+// @Summary 区块链总览
+// @Description 获取区块链总览信息
+// @Tags 区块
+// @accept json
+// @Produce  json
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"执行成功"}
+// @Failure 200 {object} Response {"code":!200,"data":null,"msg":"","detail"：""}
+// @Router /blockchain [get]
 func (a *api) GetBlockChain(c *gin.Context) {
 	response := &Response{
 		Code: OKCode,
@@ -141,6 +165,16 @@ func (a *api) GetBlockChain(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 区块列表
+// @Description 分页获取区块列表
+// @Tags 区块
+// @accept json
+// @Produce  json
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"执行成功"}
+// @Failure 200 {object} Response {"code":!200,"data":null,"msg":"","detail"：""}
+// @Router /blocks [get]
 func (a *api) GetBlocks(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,
@@ -197,6 +231,14 @@ func (a *api) GetBlocks(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 区块信息
+// @Description 获取区块信息
+// @Tags 区块
+// @accept json
+// @Produce  json
+// @Param id path string true "区块高度/区块哈希"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /blocks/{name} [get]
 func (a *api) GetBlock(c *gin.Context) {
 	response := &Response{
 		Code: OKCode,

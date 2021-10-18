@@ -5,6 +5,16 @@ import (
 	"net/http"
 )
 
+// @Summary 部署合约列表
+// @Description 分页获取部署合约列表
+// @Tags 部署合约
+// @accept json
+// @Produce  json
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"执行成功"}
+// @Failure 200 {object} Response {"code":!200,"data":null,"msg":"","detail"：""}
+// @Router /contracts [get]
 func (a *api) GetContracts(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,
@@ -60,6 +70,14 @@ func (a *api) GetContracts(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 部署合约信息
+// @Description 获取部署合约信息
+// @Tags 部署合约
+// @accept json
+// @Produce  json
+// @Param name path string true "合约名称"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /contracts/{name} [get]
 func (a *api) GetContract(c *gin.Context) {
 	response := &Response{
 		Code: OKCode,
@@ -79,6 +97,16 @@ func (a *api) GetContract(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// @Summary 部署合约相关交易
+// @Description 分页获取部署合约相关交易
+// @Tags 部署合约
+// @accept json
+// @Produce  json
+// @Param name path string true "合约名称"
+// @Param page_num query int false "页码"
+// @Param page_size query int false "个数"
+// @Success 200 {object} Response {"code":200,"data":null,"msg":"","detail"：""}
+// @Router /contracts/{name}/transactions [get]
 func (a *api) GetContractTransactions(c *gin.Context) {
 	request := PageRequest{
 		PageNum:  1,

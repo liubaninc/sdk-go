@@ -162,7 +162,14 @@ func (h handler) HandleGenesisTxs(tx []*tx.GetTxResponse) error {
 			h.log.Error("HandleGenesisTxs", "Create(validators)", err)
 			return err
 		}
-
+		var blockchain BlockChain
+		if err := h.db.FirstOrInit(&blockchain).Error; err != nil {
+			return err
+		}
+		blockchain.AddressCnt += int64(len(addresses))
+		blockchain.AssetCnt += int64(len(assets))
+		blockchain.PeerCnt += int64(len(peers))
+		blockchain.ValidatorCnt += int64(len(validators))
 		return nil
 	})
 }

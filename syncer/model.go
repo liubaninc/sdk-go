@@ -20,6 +20,17 @@ func AutoMigrate(db *gorm.DB) {
 	db.AutoMigrate(&Validator{})
 }
 
+type BlockChainChart struct {
+	gorm.Model      `json:"-"`
+	Time            string `json:"time" gorm:"unique"`
+	BlockCnt        int64  `json:"block_num"`
+	TxCnt           int64  `json:"tx_num"`
+	MsgCnt          int64  `json:"msg_num"`
+	AssetCnt        int64  `json:"asset_num"`
+	ContractCnt     int64  `json:"contract_num"`
+	ContractCodeCnt int64  `json:"contract_code_num"`
+}
+
 type BlockChain struct {
 	gorm.Model      `json:"-"`
 	BlockCnt        int64 `json:"block_num"`

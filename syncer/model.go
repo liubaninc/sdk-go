@@ -21,28 +21,29 @@ func AutoMigrate(db *gorm.DB) {
 }
 
 type BlockChain struct {
-	gorm.Model
-	BlockCnt        int64
-	TxCnt           int64
-	MsgCnt          int64
-	AssetCnt        int64
-	ContractCodeCnt int64
-	ContractCnt     int64
-	ValidatorCnt    int64
-	PeerCnt         int64
+	gorm.Model      `json:"-"`
+	BlockCnt        int64 `json:"block_num"`
+	TxCnt           int64 `json:"tx_num"`
+	MsgCnt          int64 `json:"msg_num"`
+	AddressCnt      int64 `json:"address_num"`
+	AssetCnt        int64 `json:"asset_num"`
+	ContractCodeCnt int64 `json:"contract_code_num"`
+	ContractCnt     int64 `json:"contract_num"`
+	ValidatorCnt    int64 `json:"validator_num"`
+	PeerCnt         int64 `json:"peer_num"`
 }
 
 type Block struct {
-	gorm.Model
-	Hash     string `gorm:"uniqueIndex"`
-	Height   int64  `gorm:"uniqueIndex"`
-	PrevHash string
-	Proposer string
-	Time     time.Time
-	Size     int
-	TxCnt    int
+	gorm.Model `json:"-"`
+	Hash       string    `gorm:"uniqueIndex" json:"hash"`
+	Height     int64     `gorm:"uniqueIndex" json:"height"`
+	PrevHash   string    `gorm:"uniqueIndex" json:"prev_hash"`
+	Proposer   string    `json:"proposer"`
+	Time       time.Time `json:"time"`
+	Size       int       `json:"size"`
+	TxCnt      int       `json:"tx_num"`
 
-	Txs []*Transaction `gorm:"foreignKey:Height;references:Height"`
+	Txs []*Transaction `gorm:"foreignKey:Height;references:Height" json:"txs"`
 
 	assetMap        map[string]*Asset
 	addressMap      map[string]*Address
@@ -53,25 +54,28 @@ type Block struct {
 }
 
 type Transaction struct {
-	gorm.Model
-	Hash   string `gorm:"uniqueIndex"`
-	Height int64  `gorm:"index" `
-	Status bool
-	RawLog string
-	Memo   string
-	Fees   string
-	Time   time.Time
-	Size   int
-	MsgCnt int
-	Raw    string
+	gorm.Model `json:"-"`
+	Hash       string    `gorm:"uniqueIndex" json:"hash"`
+	Height     int64     `gorm:"index" json:"height"`
+	Status     bool      `json:"status" `
+	RawLog     string    `json:"raw_log" `
+	Memo       string    `json:"memo" `
+	Fees       string    `json:"fee" `
+	Time       time.Time `json:"time" `
+	Size       int       `json:"size"`
+	MsgCnt     int       `json:"msg_num" `
+	Raw        string    `json:"-" `
+	Type       string    `json:"type"`
 
-	Msgs          []*Msg          `gorm:"foreignKey:Hash;references:Hash"`
-	Addresses     []*Address      `gorm:"many2many:tx_addresses;"`
-	Assets        []*Asset        `gorm:"many2many:tx_assets;"`
-	Contracts     []*Contract     `gorm:"many2many:tx_contracts;"`
-	ContractCodes []*ContractCode `gorm:"many2many:tx_contract_codes;"`
-	Peers         []*Peer         `gorm:"many2many:tx_peers;"`
-	Validators    []*Validator    `gorm:"many2many:tx_validators;"`
+	Msgs          []*Msg          `gorm:"foreignKey:Hash;references:Hash" json:"-" `
+	Addresses     []*Address      `gorm:"many2many:tx_addresses;" json:"-" `
+	Assets        []*Asset        `gorm:"many2many:tx_assets;" json:"-" `
+	Contracts     []*Contract     `gorm:"many2many:tx_contracts;" json:"-" `
+	ContractCodes []*ContractCode `gorm:"many2many:tx_contract_codes;" json:"-" `
+	Peers         []*Peer         `gorm:"many2many:tx_peers;" json:"-" `
+	Validators    []*Validator    `gorm:"many2many:tx_validators;" json:"-" `
+
+	Confirmed int64 `gorm:"-" json:"confirmed" `
 
 	assetMap        map[string]*Asset
 	addressMap      map[string]*Address

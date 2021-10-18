@@ -28,3 +28,14 @@ done
 # move proto files to the right places
 cp -r github.com/liubaninc/sdk-go/* ./
 rm -fr github.com
+
+#proto_dirs=$(find ./syncer -path -prune -o -name '*.proto' -print0 | xargs -0 -n1 dirname | sort | uniq)
+#for dir in $proto_dirs; do
+#  protoc \
+#  -I "syncer" \
+#  -I "third_party/proto" \
+#  --gocosmos_out=plugins=interfacetype+grpc:./syncer \
+#  --grpc-gateway_out=logtostderr=true:./syncer \
+#  $(find "${dir}" -maxdepth 1 -name '*.proto')
+#
+#done

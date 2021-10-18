@@ -189,6 +189,12 @@ func (h handler) HandlePrevBlock(block *tmservice.GetBlockByHeightResponse) erro
 func (h handler) HandleBlock(block *tmservice.GetBlockByHeightResponse, txs []*tx.GetTxResponse) error {
 	h.log.Info("HandleBlock", "height", block.Block.Header.Height)
 	return h.db.Transaction(func(db *gorm.DB) error {
+		var blockchain BlockChain
+		if err := h.db.FirstOrInit(&blockchain).Error; err != nil {
+			return err
+		}
+		blockchain.BlockCnt += 1
+
 		mBlock := &Block{
 			Hash:            hash(block.BlockId.Hash),
 			Height:          block.Block.Header.Height,
@@ -207,13 +213,13 @@ func (h handler) HandleBlock(block *tmservice.GetBlockByHeightResponse, txs []*t
 		mTxs := make([]*Transaction, len(txs))
 		for itx, tx := range txs {
 			h.Logger().Info("HandleBlock", "height", block.Block.Header.Height, "tx hash", tx.TxResponse.TxHash)
+			blockchain.TxCnt += 1
 			timestamp, _ := time.Parse(tx.TxResponse.Timestamp, time.RFC3339)
 			rawTx := encodingConfig.Marshaler.MustMarshalJSON(tx)
 			mTx := &Transaction{
 				Hash:   tx.TxResponse.TxHash,
 				Height: tx.TxResponse.Height,
 				Status: tx.TxResponse.Code == 0,
-				RawLog: tx.TxResponse.RawLog,
 				Memo:   tx.Tx.Body.Memo,
 				Fees:   tx.Tx.AuthInfo.Fee.Amount.String(),
 				Time:   timestamp,
@@ -228,11 +234,19 @@ func (h handler) HandleBlock(block *tmservice.GetBlockByHeightResponse, txs []*t
 				peerMap:         map[string]*Peer{},
 				validatorMap:    map[string]*Validator{},
 			}
+			if tx.TxResponse.Code != 0 {
+				mTx.RawLog = tx.TxResponse.RawLog
+			}
+			types := []string{}
 			for _, msg := range tx.Tx.GetMsgs() {
 				h.Logger().Info("HandleBlock", "height", block.Block.Header.Height, "tx hash", tx.TxResponse.TxHash, "msg", msg.Type())
 				if err := h.handleMsg(db, msg, mTx, mBlock); err != nil {
 					return err
 				}
+				types = append(types, msg.Type())
+			}
+			if len(types) != 0 {
+				mTx.Type = strings.Join(types, ",")
 			}
 			for _, mAddress := range mTx.addressMap {
 				mTx.Addresses = append(mTx.Addresses, mAddress)
@@ -265,14 +279,28 @@ func (h handler) HandleBlock(block *tmservice.GetBlockByHeightResponse, txs []*t
 		mBlock.Txs = mTxs
 
 		for _, mAddr := range mBlock.addressMap {
+			if mAddr.ID == 0 {
+				blockchain.AddressCnt += 1
+			}
 			mAddr.Balance = mAddr.amounts.String()
 		}
 		for _, mAsset := range mBlock.assetMap {
+			if mAsset.ID == 0 {
+				blockchain.AssetCnt += 1
+			}
 			mAsset.IssueAmount = mAsset.issueAmount.String()
 			mAsset.BurnAmount = mAsset.burnAmount.String()
 		}
 		for _, mContractCode := range mBlock.contractCodeMap {
+			if mContractCode.ID == 0 {
+				blockchain.ContractCodeCnt += 1
+			}
 			mContractCode.Approved = strings.Join(mContractCode.approved, ",")
+		}
+		for _, mContract := range mBlock.contractMap {
+			if mContract.ID == 0 {
+				blockchain.ContractCnt += 1
+			}
 		}
 		// c := h.client.WithHeight(block.Block.Header.Height)
 		//// 更新地址
@@ -363,6 +391,11 @@ func (h handler) HandleBlock(block *tmservice.GetBlockByHeightResponse, txs []*t
 		//		mContract.ContractCode = contractCodeMap[mContract.Hash]
 		//	}
 		//}
+
+		if err := db.Save(&blockchain).Error; err != nil {
+			h.log.Error("HandleBlock db.Create", "error", err)
+			return err
+		}
 
 		if err := db.Session(&gorm.Session{FullSaveAssociations: true}).Create(mBlock).Error; err != nil {
 			h.log.Error("HandleBlock db.Create", "error", err)

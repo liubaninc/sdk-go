@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"encoding/hex"
+	"strings"
 	"time"
 
 	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
@@ -74,7 +75,11 @@ func (c *Client) OffChainSyncing(ctx context.Context, start int64, handler Synce
 
 		block, err := c.GetBlockByHeight(start)
 		if err != nil {
-			sleepFun(err, "GetBlockByHeight", start)
+			if strings.Contains(err.Error(), "block height is bigger then the chain length") {
+				time.Sleep(time.Second)
+			} else {
+				sleepFun(err, "GetBlockByHeight", start-1)
+			}
 			continue
 		}
 		txs := make([]*tx.GetTxResponse, len(block.Block.Data.Txs))

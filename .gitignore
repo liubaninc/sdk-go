@@ -4,3 +4,4 @@ vue/dist
 release/
 .idea/
 build/
+synced.db

@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
+
 // @Summary 验证者列表
 // @Description 分页获验证者列表
 // @Tags 验证者

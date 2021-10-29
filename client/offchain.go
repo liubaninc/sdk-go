@@ -67,6 +67,7 @@ func (c *Client) OffChainSyncing(ctx context.Context, start int64, handler Synce
 	}
 
 	for {
+		relay:
 		select {
 		case <-ctx.Done():
 			return
@@ -88,7 +89,7 @@ func (c *Client) OffChainSyncing(ctx context.Context, start int64, handler Synce
 			tx, err := c.GetTx(hash)
 			if err != nil {
 				sleepFun(err, "GetTx", start)
-				continue
+				goto relay
 			}
 			tx.Tx.UnpackInterfaces(encodingConfig.InterfaceRegistry)
 			txs[i] = tx

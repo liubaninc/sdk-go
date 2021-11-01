@@ -8,15 +8,15 @@ import (
 	"gorm.io/gorm"
 )
 
-func MustNewDB(mode string, dsn string) *gorm.DB {
-	db, err := NewDB(mode, dsn)
+func MustNewDB(mode string, dsn string, opts ...gorm.Option) *gorm.DB {
+	db, err := NewDB(mode, dsn, opts...)
 	if err != nil {
 		panic(err)
 	}
 	return db
 }
 
-func NewDB(mode string, dsn string) (*gorm.DB, error) {
+func NewDB(mode string, dsn string, opts ...gorm.Option) (*gorm.DB, error) {
 	var conn gorm.Dialector
 	switch mode {
 	case "sqlite":
@@ -29,7 +29,7 @@ func NewDB(mode string, dsn string) (*gorm.DB, error) {
 		return nil, fmt.Errorf("invalid db engine. supported types: sqlite, mysql, postgres")
 	}
 
-	db, err := gorm.Open(conn)
+	db, err := gorm.Open(conn, opts...)
 	if err != nil {
 		return nil, err
 	}

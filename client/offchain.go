@@ -101,6 +101,7 @@ func (c *Client) OffChainSyncing(ctx context.Context, start int64, handler Synce
 			continue
 		}
 
+		errCount = 0
 		// 处理世界状态
 		start++
 	}
